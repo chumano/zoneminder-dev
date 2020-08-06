@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/chumano/zoneminder.git
+	branch = master
+	commit = a575b162782a0fd679eaee7d53dea9a53edfc372
+	parent = 701600c4502ff7d5a1486af59ff686cceceeab6b
+	method = merge
+	cmdver = 0.4.0
