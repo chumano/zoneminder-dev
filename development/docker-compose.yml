@@ -1,0 +1,18 @@
+version: '3'
+services:
+    zoneminder:
+        container_name: zmdev
+        image: hub.tris.vn/zmdev
+        build: 
+            context: .
+            dockerfile: ./ubuntu/xenial/Dockerfile
+        restart: unless-stopped
+        ports:
+            - 1080:80
+        network_mode: "bridge"
+        privileged: true
+        shm_size: 512M
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        volumes:
+            - D:/Projects/TriS/codes/tris-zoneminder/zmdockerfiles-master/development/zoneminder:/ZoneMinder
