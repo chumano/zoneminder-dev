@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
         Usage();
         break;
       case 'v':
-        std::cout << "ZM_VERSION:2.00" << "\n";
+        std::cout << "ZM_VERSION:2.01" << "\n";
         exit(0);
       default:
         // fprintf(stderr, "?? getopt returned character code 0%o ??\n", c);

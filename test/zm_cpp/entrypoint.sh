@@ -5,7 +5,7 @@ setup() {
     
     cd /src
     # Configure
-    cmake .
+    cmake . -Bbuild
 
     # Build & install ZoneMindercd
     #make && make install

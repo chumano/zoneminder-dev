@@ -6,3 +6,4 @@ test/zm_cpp/src/install_manifest.txt
 .vscode/settings.json
 test/zm_cpp/src/zmc
 test/zm_cpp/src/libzm.a
+test/zm_cpp/src/build
