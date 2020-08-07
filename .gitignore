@@ -7,3 +7,12 @@ test/zm_cpp/src/install_manifest.txt
 test/zm_cpp/src/zmc
 test/zm_cpp/src/libzm.a
 test/zm_cpp/src/build
+test/ffmpeg/src/FFmpeg
+test/ffmpeg/src/FFmpeg-Basic/0-TestEnvironment/main
+test/ffmpeg/src/FFmpeg-Basic/1-VideoDecoding/main
+test/ffmpeg/src/FFmpeg-Basic/2-VideoEncoding/main
+test/ffmpeg/src/FFmpeg-Basic/3-AudioDecoding/main
+test/ffmpeg/src/FFmpeg-Basic/output
+test/ffmpeg/src/FFmpeg-Basic/5-Remuxing/main
+test/ffmpeg/src/FFmpeg-Basic/4-AudioEncoding/main
+test/ffmpeg/src/FFmpeg-Basic/6-Tanscoding/main

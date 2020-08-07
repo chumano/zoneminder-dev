@@ -1,0 +1,15 @@
+version: '3'
+services:
+    test:
+        container_name: testffmpeg
+        image: test_ffmpeg
+        build: 
+            context: .
+            dockerfile: ./Dockerfile
+        restart: unless-stopped
+        privileged: true
+        shm_size: 512M
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        volumes:
+            - ./src:/src
