@@ -80,12 +80,14 @@ possible, this should run at more or less constant speed.
 //#include "zm_signal.h"
 //#include "zm_monitor.h"
 
-void exit( int p_status = 0 ) {
-    //INFO( "Exiting" );
-    pthread_exit( (void *)&p_status );
+void exit(int p_status = 0)
+{
+  //INFO( "Exiting" );
+  pthread_exit((void *)&p_status);
 }
 
-void Usage() {
+void Usage()
+{
   fprintf(stderr, "zmc -d <device_path> or -r <proto> -H <host> -P <port> -p <path> or -f <file_path> or -m <monitor_id>\n");
 
   fprintf(stderr, "Options:\n");
@@ -102,9 +104,10 @@ void Usage() {
 }
 
 /* This is our argv[0], we need it for backtrace */
-const char* self = 0;
+const char *self = 0;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   self = argv[0];
 
   srand(getpid() * time(0));
@@ -118,89 +121,102 @@ int main(int argc, char *argv[]) {
   int monitor_id = -1;
 
   static struct option long_options[] = {
-    {"device", 1, 0, 'd'},
-    {"protocol", 1, 0, 'r'},
-    {"host", 1, 0, 'H'},
-    {"port", 1, 0, 'P'},
-    {"path", 1, 0, 'p'},
-    {"file", 1, 0, 'f'},
-    {"monitor", 1, 0, 'm'},
-    {"help", 0, 0, 'h'},
-    {"version", 0, 0, 'v'},
-    {0, 0, 0, 0}
-  };
+      {"device", 1, 0, 'd'},
+      {"protocol", 1, 0, 'r'},
+      {"host", 1, 0, 'H'},
+      {"port", 1, 0, 'P'},
+      {"path", 1, 0, 'p'},
+      {"file", 1, 0, 'f'},
+      {"monitor", 1, 0, 'm'},
+      {"help", 0, 0, 'h'},
+      {"version", 0, 0, 'v'},
+      {0, 0, 0, 0}};
 
-  while (1) {
+  while (1)
+  {
     int option_index = 0;
 
     int c = getopt_long(argc, argv, "d:H:P:p:f:m:h:v", long_options, &option_index);
-    if ( c == -1 ) {
+    if (c == -1)
+    {
       break;
     }
 
-    switch (c) {
-      case 'd':
-        device = optarg;
-        break;
-      case 'H':
-        host = optarg;
-        break;
-      case 'P':
-        port = optarg;
-        break;
-      case 'p':
-        path = optarg;
-        break;
-      case 'f':
-        file = optarg;
-        break;
-      case 'm':
-        monitor_id = atoi(optarg);
-        break;
-      case 'h':
-      case '?':
-        Usage();
-        break;
-      case 'v':
-        std::cout << "ZM_VERSION:2.01" << "\n";
-        exit(0);
-      default:
-        // fprintf(stderr, "?? getopt returned character code 0%o ??\n", c);
-        break;
+    switch (c)
+    {
+    case 'd':
+      device = optarg;
+      break;
+    case 'H':
+      host = optarg;
+      break;
+    case 'P':
+      port = optarg;
+      break;
+    case 'p':
+      path = optarg;
+      break;
+    case 'f':
+      file = optarg;
+      break;
+    case 'm':
+      monitor_id = atoi(optarg);
+      break;
+    case 'h':
+    case '?':
+      Usage();
+      break;
+    case 'v':
+      std::cout << "ZM_VERSION:1.01"
+                << "\n";
+      exit(0);
+    default:
+      // fprintf(stderr, "?? getopt returned character code 0%o ??\n", c);
+      break;
     }
   }
 
-  if ( optind < argc ) {
+  if (optind < argc)
+  {
     fprintf(stderr, "Extraneous options, ");
-    while ( optind < argc )
+    while (optind < argc)
       printf("%s ", argv[optind++]);
     printf("\n");
     Usage();
   }
 
-  int modes = ( (device[0]?1:0) + (host[0]?1:0) + (file[0]?1:0) + (monitor_id > 0 ? 1 : 0) );
-  if ( modes > 1 ) {
+  int modes = ((device[0] ? 1 : 0) + (host[0] ? 1 : 0) + (file[0] ? 1 : 0) + (monitor_id > 0 ? 1 : 0));
+  if (modes > 1)
+  {
     fprintf(stderr, "Only one of device, host/port/path, file or monitor id allowed\n");
     Usage();
     exit(0);
   }
 
-  if ( modes < 1 ) {
+  if (modes < 1)
+  {
     fprintf(stderr, "One of device, host/port/path, file or monitor id must be specified\n");
     Usage();
     exit(0);
   }
 
   char log_id_string[32] = "";
-  if ( device[0] ) {
+  if (device[0])
+  {
     const char *slash_ptr = strrchr(device, '/');
-    snprintf(log_id_string, sizeof(log_id_string), "zmc_d%s", slash_ptr?slash_ptr+1:device);
-  } else if ( host[0] ) {
+    snprintf(log_id_string, sizeof(log_id_string), "zmc_d%s", slash_ptr ? slash_ptr + 1 : device);
+  }
+  else if (host[0])
+  {
     snprintf(log_id_string, sizeof(log_id_string), "zmc_h%s", host);
-  } else if ( file[0] ) {
+  }
+  else if (file[0])
+  {
     const char *slash_ptr = strrchr(file, '/');
-    snprintf(log_id_string, sizeof(log_id_string), "zmc_f%s", slash_ptr?slash_ptr+1:file);
-  } else {
+    snprintf(log_id_string, sizeof(log_id_string), "zmc_f%s", slash_ptr ? slash_ptr + 1 : file);
+  }
+  else
+  {
     snprintf(log_id_string, sizeof(log_id_string), "zmc_m%d", monitor_id);
   }
 
@@ -210,7 +226,7 @@ int main(int argc, char *argv[]) {
 
   hwcaps_detect();
 
-/*
+  /*
   Monitor **monitors = 0;
   int n_monitors = 0;
 #if ZM_HAS_V4L
@@ -395,5 +411,5 @@ int main(int argc, char *argv[]) {
   logTerm();
   zmDbClose();
   */
-	return 0;//zm_terminate ? 0 : result;
+  return 0; //zm_terminate ? 0 : result;
 }
