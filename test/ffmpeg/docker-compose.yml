@@ -1,0 +1,15 @@
+version: '3'
+services: 
+    test_lib:
+        container_name: testffmpeglib
+        image: test_ffmpeglib
+        build: 
+            context: .
+            dockerfile: ./Dockerfile
+        restart: unless-stopped
+        privileged: true
+        shm_size: 512M
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        volumes:
+            - ./src:/src
