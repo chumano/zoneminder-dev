@@ -23,7 +23,7 @@ set(BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 #configure_file(zm_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/zm_config.h" @ONLY)
 
 # Group together all the source files that are used by all the binaries (zmc, zma, zmu, zms etc)
-set(ZM_BIN_SRC_FILES zm_utils.cpp)
+set(ZM_BIN_SRC_FILES zm_utils.cpp zm_monitor.cpp)
 
 # Create a target for man pages
 include(Pod2Man)
