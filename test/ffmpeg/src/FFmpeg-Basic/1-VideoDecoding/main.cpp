@@ -4,7 +4,7 @@
 
 #include "VideoDecoding.h"
 
-//g++ -w main.cpp VideoDecoding.cpp -o main $(pkg-config --cflags --libs libavformat libavcodec)
+//g++ -w main.cpp VideoDecoding.cpp -o main $(pkg-config --cflags --libs libavutil libavformat libavcodec)
 int main()
 {
     const char *fileName = "../assets/Sample.mkv";

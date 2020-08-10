@@ -16,3 +16,4 @@ test/ffmpeg/src/FFmpeg-Basic/output
 test/ffmpeg/src/FFmpeg-Basic/5-Remuxing/main
 test/ffmpeg/src/FFmpeg-Basic/4-AudioEncoding/main
 test/ffmpeg/src/FFmpeg-Basic/6-Tanscoding/main
+/test/ffmpeg/ffmpeglibs
