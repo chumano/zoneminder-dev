@@ -15,3 +15,20 @@ docker build . -t zmdev
 docker run -d -t -p 1080:80  --shm-size="512m" --name  zmdev zmdev 
 - ========================================
 git clone --recursive https://github.com/chumano/zoneminder
+
+
+./CMakeLists.txt
+./db/CMakeLists.txt
+./distros/opensuse/CMakeLists.txt
+./distros/redhat/CMakeLists.txt
+./misc/CMakeLists.txt
+./onvif/CMakeLists.txt
+./onvif/modules/CMakeLists.txt
+./onvif/proxy/CMakeLists.txt
+./scripts/CMakeLists.txt
+./scripts/ZoneMinder/CMakeLists.txt
+./src/CMakeLists.txt
+./src/libbcrypt/CMakeLists.txt
+./web/CMakeLists.txt
+./web/api/CMakeLists.txt
+./web/tools/mootools/CMakeLists.txt
