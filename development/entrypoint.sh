@@ -11,7 +11,8 @@ setup() {
     echo "CHUNO-setup"
     mkdir /var/cache/zoneminder
     chmod 777 /var/cache/zoneminder
-    
+
+    #chmod -R 777 /ZoneMinder
     cd /ZoneMinder
     # Configure ZoneMinder
     cmake .

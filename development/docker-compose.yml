@@ -15,4 +15,4 @@ services:
         environment:
             - TZ=Asia/Ho_Chi_Minh
         volumes:
-            - D:/Projects/TriS/codes/tris-zoneminder/zmdockerfiles-master/development/zoneminder:/ZoneMinder
+            - ./zoneminder:/ZoneMinder:rw

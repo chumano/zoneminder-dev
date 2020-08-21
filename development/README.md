@@ -13,3 +13,5 @@ Contributions are welcome, but please follow these simple guidelines:
 docker build . -t zmdev
 
 docker run -d -t -p 1080:80  --shm-size="512m" --name  zmdev zmdev 
+- ========================================
+git clone --recursive https://github.com/chumano/zoneminder
