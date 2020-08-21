@@ -32,3 +32,6 @@ git clone --recursive https://github.com/chumano/zoneminder
 ./web/CMakeLists.txt
 ./web/api/CMakeLists.txt
 ./web/tools/mootools/CMakeLists.txt
+
+-- git clean : to remove all cmake cache
+git clean -dxf

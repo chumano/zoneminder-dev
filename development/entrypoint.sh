@@ -6,7 +6,6 @@
 # It looks in common places for the files & executables it needs
 # and thus should be compatible with major Linux distros.
 
-
 setup() {
     echo "CHUNO-setup"
     mkdir /var/cache/zoneminder
