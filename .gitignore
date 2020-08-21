@@ -40,3 +40,9 @@ development/zoneminder/web/api/lib/Cake/bootstrap.php
 development/zoneminder/CPackConfig.cmake
 development/zoneminder/CPackSourceConfig.cmake
 development/zoneminder/conf.d/01-system-paths.conf
+development/zoneminder/onvif/modules/pm_to_blib
+development/zoneminder/onvif/modules/MYMETA.json
+development/zoneminder/onvif/modules/MYMETA.yml
+development/zoneminder/onvif/proxy/MYMETA.json
+development/zoneminder/onvif/proxy/MYMETA.yml
+development/zoneminder/onvif/proxy/pm_to_blib
