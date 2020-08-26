@@ -150,7 +150,9 @@ bool Transcoding::initEncCtx(const char *outfile)
                 else
                     encCtx->pix_fmt = decCtx->pix_fmt;
 
-                encCtx->time_base = av_inv_q(decCtx->framerate);
+                // encCtx->time_base = av_inv_q(decCtx->framerate);
+                //test
+                encCtx->time_base = decCtx->time_base;
             }
             // Audio Stream
             else

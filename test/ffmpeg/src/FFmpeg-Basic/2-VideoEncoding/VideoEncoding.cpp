@@ -3,11 +3,9 @@
 */
 #include "VideoEncoding.h"
 
-VideoEncoding::VideoEncoding():
-    mCodecCtx(NULL)
+VideoEncoding::VideoEncoding() : mCodecCtx(NULL)
 {
 }
-
 
 VideoEncoding::~VideoEncoding()
 {
@@ -16,7 +14,7 @@ VideoEncoding::~VideoEncoding()
 
 bool VideoEncoding::init()
 {
-    avcodec_register_all();
+    // avcodec_register_all();
     return false;
 }
 
@@ -25,13 +23,15 @@ bool VideoEncoding::initCodecContext()
 {
     const AVCodec *enc = avcodec_find_encoder_by_name("libx264");
     //const AVCodec *enc = avcodec_find_encoder(AV_CODEC_ID_H264);
-    if (!enc) {
+    if (!enc)
+    {
         fprintf(stderr, "Failed to find encoder\n");
         return true;
     }
 
     mCodecCtx = avcodec_alloc_context3(enc);
-    if (!mCodecCtx) {
+    if (!mCodecCtx)
+    {
         printf("Failed to allocate the codec context\n");
         return true;
     }
@@ -42,18 +42,20 @@ bool VideoEncoding::initCodecContext()
     mCodecCtx->height = 534;
     mCodecCtx->bit_rate = 1000000; // 1Mbps
     mCodecCtx->gop_size = 10;
-    mCodecCtx->time_base = { 1, 24 };
-    mCodecCtx->framerate = { 24, 1 };
+    mCodecCtx->time_base = {1, 24};
+    mCodecCtx->framerate = {24, 1};
     mCodecCtx->max_b_frames = 1;
     mCodecCtx->pix_fmt = AV_PIX_FMT_YUV420P;
 
-    if (enc->id == AV_CODEC_ID_H264) {
+    if (enc->id == AV_CODEC_ID_H264)
+    {
         //av_opt_set(mCodecCtx->priv_data, "preset", "slow", 0);   // delay ~18 frames
-        av_opt_set(mCodecCtx->priv_data, "tune", "zerolatency", 0);    // no delay
+        av_opt_set(mCodecCtx->priv_data, "tune", "zerolatency", 0); // no delay
     }
 
     // Initialize mCodecCtx to use the given Codec
-    if (avcodec_open2(mCodecCtx, enc, NULL) < 0) {
+    if (avcodec_open2(mCodecCtx, enc, NULL) < 0)
+    {
         printf("Failed to open codec\n");
         return true;
     }
@@ -61,17 +63,19 @@ bool VideoEncoding::initCodecContext()
     return false;
 }
 
-bool VideoEncoding::readFrameProc(const char * input, const char * output)
+bool VideoEncoding::readFrameProc(const char *input, const char *output)
 {
     FILE *yuvFd = fopen(input, "rb");
     FILE *outFd = fopen(output, "wb");
-    if (!outFd || !yuvFd) {
+    if (!outFd || !yuvFd)
+    {
         fprintf(stderr, "Could not open file\n");
         return true;
     }
 
     AVFrame *frame = NULL;
-    if (!(frame = av_frame_alloc())) {
+    if (!(frame = av_frame_alloc()))
+    {
         printf("Failed to allocate video frame\n");
         return true;
     }
@@ -80,29 +84,31 @@ bool VideoEncoding::readFrameProc(const char * input, const char * output)
     frame->width = mCodecCtx->width;
     frame->height = mCodecCtx->height;
 
-    if (av_frame_get_buffer(frame, 32) < 0) {
+    if (av_frame_get_buffer(frame, 32) < 0)
+    {
         printf("Failed to allocate the video frame data\n");
         return true;
     }
 
-
     int num = 0, i = 0;
     AVPacket pkt;
     // read a frame every time
-    while (!feof(yuvFd)) {
+    while (!feof(yuvFd))
+    {
 
         av_init_packet(&pkt);
-        pkt.data = NULL;    // packet data will be allocated by the encoder
+        pkt.data = NULL; // packet data will be allocated by the encoder
         pkt.size = 0;
 
-        if (av_frame_make_writable(frame)) {
+        if (av_frame_make_writable(frame))
+        {
             return true;
         }
 
-        // fill frame.data 
-        fread(frame->data[0], 1, mCodecCtx->width *mCodecCtx->height, yuvFd);
-        fread(frame->data[1], 1, mCodecCtx->width*mCodecCtx->height / 4, yuvFd);
-        fread(frame->data[2], 1, mCodecCtx->width*mCodecCtx->height / 4, yuvFd);
+        // fill frame.data
+        fread(frame->data[0], 1, mCodecCtx->width * mCodecCtx->height, yuvFd);
+        fread(frame->data[1], 1, mCodecCtx->width * mCodecCtx->height / 4, yuvFd);
+        fread(frame->data[2], 1, mCodecCtx->width * mCodecCtx->height / 4, yuvFd);
 
         frame->pts = i++;
 
@@ -110,7 +116,8 @@ bool VideoEncoding::readFrameProc(const char * input, const char * output)
         avcodec_send_frame(mCodecCtx, frame);
         int ret = avcodec_receive_packet(mCodecCtx, &pkt);
 
-        if (!ret) {
+        if (!ret)
+        {
             printf("Write frame %3d (size=%5d)\n", i, pkt.size);
             fwrite(pkt.data, 1, pkt.size, outFd);
             av_packet_unref(&pkt);
@@ -118,28 +125,31 @@ bool VideoEncoding::readFrameProc(const char * input, const char * output)
         printf("------------------------------------\n");
     }
 
-    // ±àÂëÓÐÑÓÊ±£¬»ñÈ¡ÑÓÊ±µÄÊý¾Ý
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    for (;; i++) {
+    for (;; i++)
+    {
         avcodec_send_frame(mCodecCtx, NULL);
         int ret = avcodec_receive_packet(mCodecCtx, &pkt);
-        if (ret == 0) {
+        if (ret == 0)
+        {
             printf("Write frame %3d (size=%5d)\n", i, pkt.size);
             fwrite(pkt.data, 1, pkt.size, outFd);
             av_packet_unref(&pkt);
         }
-        else if (ret == AVERROR_EOF) {
+        else if (ret == AVERROR_EOF)
+        {
             printf("Write frame complete\n");
             break;
         }
-        else {
+        else
+        {
             printf("Error encoding frame\n");
             break;
         }
-
     }
 
-    uint8_t endcode[] = { 0, 0, 1, 0xb7 };
+    uint8_t endcode[] = {0, 0, 1, 0xb7};
     /* add sequence end code to have a real MPEG file */
     fwrite(endcode, 1, sizeof(endcode), outFd);
 

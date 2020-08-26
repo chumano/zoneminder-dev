@@ -10,28 +10,32 @@
 int main()
 {
     const char *srcFile = "../assets/Sample.mkv";
-    const char *dstFile = "../output/Sample.ts";
+    const char *dstFile = "../output/Sample.mp4";
 
     Transcoding tc;
-    
+
     tc.initSys();
 
-    if (tc.initDecCtx(srcFile)) {
+    if (tc.initDecCtx(srcFile))
+    {
         printf("Failed to init decodec ctx");
         return 1;
     }
 
-    if (tc.initEncCtx(dstFile)) {
+    if (tc.initEncCtx(dstFile))
+    {
         printf("Failed to init encodec ctx");
         return 1;
     }
 
-    if (tc.initFilters()) {
+    if (tc.initFilters())
+    {
         printf("Failed to init filters");
         return 1;
     }
 
-    if (tc.transcode()) {
+    if (tc.transcode())
+    {
         printf("Err.");
         return 1;
     }
