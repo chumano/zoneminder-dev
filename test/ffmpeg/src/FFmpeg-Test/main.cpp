@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 {
     //Remuxing
     printf("This is a ffmpeg test\n");
-    string output = "./output/out.mp4";
+    string output = argv[3] ? argv[3] : "/src/FFmpeg-Test/output/out.mp4";
     int mStreamNum;
     int *mStreamMap;
     //Init videos timestamp
@@ -78,11 +78,16 @@ int main(int argc, char *argv[])
     int endExtract = 45;
     tm startExtractDate;
     tm endExtractDate;
-    sscanf("08/21 10:42:50", "%2d/%2d %2d:%2d:%2d", &startExtractDate.tm_mon, &startExtractDate.tm_mday,
+    printf("starttime string: %s\n", argv[1]);
+    printf("endtime string: %s\n", argv[2]);
+    int inputYear;
+    sscanf(argv[1], "%4d-%2d-%2d %2d:%2d:%2d", &inputYear, &startExtractDate.tm_mon, &startExtractDate.tm_mday,
            &startExtractDate.tm_hour, &startExtractDate.tm_min, &startExtractDate.tm_sec);
-    sscanf("08/21 10:46:00", "%2d/%2d %2d:%2d:%2d", &endExtractDate.tm_mon, &endExtractDate.tm_mday,
+    startExtractDate.tm_year = inputYear - 1900;
+    sscanf(argv[2], "%4d-%2d-%2d %2d:%2d:%2d", &inputYear, &endExtractDate.tm_mon, &endExtractDate.tm_mday,
            &endExtractDate.tm_hour, &endExtractDate.tm_min, &endExtractDate.tm_sec);
-    startExtractDate.tm_year = endExtractDate.tm_year = 2020 - 1900;
+    endExtractDate.tm_year = inputYear - 1900;
+    // startExtractDate.tm_year = endExtractDate.tm_year = 2020 - 1900;
     FILE *outfs = fopen(output.c_str(), "wb");
 
     if (!outfs)
@@ -115,8 +120,8 @@ int main(int argc, char *argv[])
         video_start = mktime(&video[k].startdate);
         video_end = mktime(&video[k].enddate);
         video[k].printTimeStamp();
-        // printf("Extract from %s\n", asctime(&startExtractDate));
-        // printf("Extract to %s\n", asctime(&endExtractDate));
+        printf("Extract from %s\n", asctime(&startExtractDate));
+        printf("Extract to %s\n", asctime(&endExtractDate));
         // printf("extract_start and video_end diff: %f\n", difftime(extract_start, video_end));
         // printf("extract_end and video_start diff: %f\n", difftime(extract_end, video_start));
         if (difftime(extract_start, video_end) > 0 || difftime(extract_end, video_start) < 0)
@@ -124,7 +129,7 @@ int main(int argc, char *argv[])
             continue;
         }
         string folderName = to_string(video[k].index);
-        string path = "./assets/" + folderName + "/" + folderName + "-video.mp4";
+        string path = "/src/FFmpeg-Test/assets/" + folderName + "/" + folderName + "-video.mp4";
         printf("Input file path: %s\n", path.c_str());
         FILE *infs = fopen(path.c_str(), "rb");
         if (!infs)
@@ -148,7 +153,7 @@ int main(int argc, char *argv[])
             printf("Failed to retrieve input stream information");
             return true;
         }
-        av_dump_format(inFmtCtx, 0, path.c_str(), 0);
+        // av_dump_format(inFmtCtx, 0, path.c_str(), 0);
 
         //Set up output format corresponse to input
         // if (!mStreamNum || !mStreamMap)
@@ -198,7 +203,7 @@ int main(int argc, char *argv[])
                 createdNewStream = true;
             }
         }
-        av_dump_format(outFormatCtxt, 0, output.c_str(), 1);
+        // av_dump_format(outFormatCtxt, 0, output.c_str(), 1);
         //Finish set up output format
 
         //Danger!! start reading and write packet
@@ -236,12 +241,12 @@ int main(int argc, char *argv[])
             {
                 if (ret == AVERROR_EOF)
                 {
-                    printf("End of file: %s\n", path.c_str());
+                    // printf("End of file: %s\n", path.c_str());
                     // printf("temp packet pts: %" PRIu64 "\n", temp_packet_pts);
                     prev_packet_duration += temp_packet_duration;
                     // printf("prev packet pts: %" PRIu64 "\n", prev_packet_pts_end);
-                    printf("Written frames: %3d\n", noWrittenFrames);
-                    printf("Ignored frames: %3d\n", noIgnoredFrames);
+                    // printf("Written frames: %3d\n", noWrittenFrames);
+                    // printf("Ignored frames: %3d\n", noIgnoredFrames);
                 }
                 else
                 {
