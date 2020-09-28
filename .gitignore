@@ -36,3 +36,4 @@ development/zoneminder/web/api/lib/Cake/bootstrap.php
 test/ffmpeg/entrypoint.sh
 test/ffmpeg/src/FFmpeg-Test/assets
 test/ffmpeg/src/FFmpeg-Test/output
+test/ffmpeg/src/FFmpeg-Test/cgi
