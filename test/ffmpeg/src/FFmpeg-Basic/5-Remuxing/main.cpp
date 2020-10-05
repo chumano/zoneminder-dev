@@ -11,7 +11,7 @@ int main()
 
     // Just to modefy the suffix (mkv/ts/mp4).
     //rtsp://admin:Tris@123@chumano.ddns.net:55401/h264/main/av_stream
-    const char *inFile = "../../FFmpeg-Test/assets/15/15-video.mp4";
+    const char *inFile = "../assets/Sample.mkv";
     const char *outFile = "../output/Sample.mp4";
 
     // if (remuxing.init(inFile, outFile))
