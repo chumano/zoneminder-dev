@@ -1,5 +1,0 @@
---
--- This updates a 1.32.0 database to 1.32.1
---
--- No changes required
---
