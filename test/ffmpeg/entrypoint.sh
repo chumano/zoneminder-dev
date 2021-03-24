@@ -8,7 +8,7 @@ setup() {
 
     # Build & install ZoneMindercd
     #make && make install
-
+    service apache2 start
 }
 
 setup

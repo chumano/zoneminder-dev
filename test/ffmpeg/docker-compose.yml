@@ -7,9 +7,25 @@ services:
             context: .
             dockerfile: ./Dockerfile
         restart: unless-stopped
+        ports:
+        - "9090:80"
         privileged: true
         shm_size: 512M
         environment:
             - TZ=Asia/Ho_Chi_Minh
         volumes:
             - ./src:/src
+            - ./php:/var/www/html/webapp
+    # webapp:
+    #     container_name: testphpweb
+    #     image: php:7.3-apache
+    #     restart: unless-stopped
+    #     ports:
+    #     - "9090:80"
+    #     privileged: true
+    #     shm_size: 512M
+    #     environment:
+    #         - TZ=Asia/Ho_Chi_Minh
+    #     volumes:
+    #         - ./php:/var/www/html/webapp
+    #         - ./src:/src

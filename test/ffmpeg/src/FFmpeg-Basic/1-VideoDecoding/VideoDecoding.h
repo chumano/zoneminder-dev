@@ -4,7 +4,8 @@
 
 #pragma once
 
-extern "C" {
+extern "C"
+{
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 }
@@ -26,7 +27,5 @@ private:
 
     int mVideoStreamIndex;
     AVFormatContext *mFormatCtx;
-    AVCodecContext  *mCodecCtx;
+    AVCodecContext *mCodecCtx;
 };
-
-

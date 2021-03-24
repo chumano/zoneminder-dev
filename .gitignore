@@ -46,3 +46,8 @@ development/zoneminder/onvif/modules/MYMETA.yml
 development/zoneminder/onvif/proxy/MYMETA.json
 development/zoneminder/onvif/proxy/MYMETA.yml
 development/zoneminder/onvif/proxy/pm_to_blib
+development/entrypoint.sh
+test/ffmpeg/entrypoint.sh
+test/ffmpeg/src/FFmpeg-Test/assets
+test/ffmpeg/src/FFmpeg-Test/output
+test/ffmpeg/src/FFmpeg-Test/cgi
